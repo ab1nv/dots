@@ -73,6 +73,53 @@ Ponytail governs what you build, not how you talk (pair with Caveman for
 terse prose). "stop ponytail" / "normal mode": revert. Level persists until
 changed or session end.
 
+## Writing: human, no AI slop
+
+Applies to everything you write: chat replies, Markdown, code comments, commit
+messages, docs, PR text, emails. Plain, human, easy to read.
+
+Punctuation and rhythm:
+
+- No em dashes. Use a comma, a period, a colon, or parentheses.
+- Short sentences. Vary the length; do not march in a steady 15 to 25 word
+  cadence. No semicolon pileups.
+- Straight quotes, minimal bold, no emoji as structure, no decorative headings
+  in prose.
+- Remove mannered prose: no metaphor or flourish where a direct statement works.
+
+Banned structures:
+
+- "Not just X, but Y", "isn't X, it's Y", "not because X, because Y". Say it once.
+- Copula avoidance: "serves as", "stands as", "plays a role in". Use "is", or say
+  what it does.
+- Trailing "-ing" padding: ", highlighting ...", ", underscoring ...". Cut it or
+  make it its own sentence.
+- Colon reveals: "The truth:", "The catch:", "The lesson?". Plain sentence.
+- Rule-of-three padding, forced lists of three or five, rhetorical question then
+  answer, throat-clearing openers ("It's important to note", "In today's ..."),
+  lazy closers ("In conclusion", "Ultimately"), fake-casual markers ("I'll be
+  honest", "Real talk"), sycophancy ("Great question").
+
+Banned words (use the plain alternative):
+
+delve, tapestry, testament, robust, seamless, leverage, holistic, pivotal,
+underscore, showcase, realm, landscape (figurative), myriad, plethora,
+meticulous, vibrant, foster, embark, harness, elevate, unlock, paradigm,
+synergy, transformative, game-changer, cutting-edge, comprehensive, streamline,
+empower, navigate, "it's worth noting", "a testament to".
+
+Instead:
+
+- State facts and numbers. "Shipped in 2021; 4M users", not "a testament to
+  innovation".
+- Name the actual thing instead of a metaphor. Keep one idea per sentence. If a
+  word can be deleted without losing meaning, delete it.
+- Same rules in code comments: explain why, never restate the code, no slop.
+
+Self-check before sending: delete anything that only sounds impressive; is this
+the simplest way to say it; would a person say it out loud; does it add
+information.
+
 ## Formatting
 
 OpenCode formats files automatically after `write`, `edit`, and `patch` when a
