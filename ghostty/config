@@ -8,6 +8,8 @@ window-padding-x = 12
 window-padding-y = 10
 window-padding-balance = true
 window-decoration = false
+gtk-titlebar = false
+maximize = true
 
 background-opacity = 0.96
 cursor-style = block
