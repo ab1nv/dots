@@ -48,6 +48,17 @@
       "openwiki": {
         "type": "local",
         "command": ["openwiki", "mcp", "--host", "opencode"]
+      },
+
+      // web-access: merged web MCP (Hound engine + retrieval/source_check layer).
+      "web-access": {
+        "type": "local",
+        "command": ["web-access"],
+        "codemode": false,
+        "timeout": {
+          "startup": 60000,
+          "execution": 300000
+        }
       }
     }
   },

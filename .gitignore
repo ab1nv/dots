@@ -11,5 +11,12 @@ Thumbs.db
 node_modules/
 npm-debug.log*
 
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+
 # Local scratch
 *.local
