@@ -135,6 +135,15 @@ YAML/Markdown when the project provides them), `rustfmt`, `clang-format`.
 - Hand-format Markdown and JSONC configs cleanly regardless: headings, blank
   lines, aligned arrays.
 
+## Git commits
+
+Unless told otherwise, every commit message uses Conventional Commits:
+`type(scope): summary`. Types: `feat`, `fix`, `docs`, `style`, `refactor`,
+`perf`, `test`, `build`, `ci`, `chore`, `revert`. Imperative mood, lower case,
+no trailing period. Scope is optional but use it when the change has one clear
+area. Example: `feat(exam): add /exam skill and command`. This applies to every
+repo, not only this one.
+
 ## File search
 
 OpenCode's `grep` and `glob` tools are backed by **fff** natively (in-memory
