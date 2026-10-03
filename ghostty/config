@@ -18,3 +18,7 @@ copy-on-select = clipboard
 confirm-close-surface = false
 
 shell-integration = zsh
+
+# Force zsh. Without this, Ghostty uses $SHELL, which can still be bash in a
+# desktop session that predates `chsh`.
+command = /usr/bin/zsh

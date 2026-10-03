@@ -2,6 +2,7 @@
 
 export EDITOR=nvim
 export VISUAL=nvim
+export SHELL=/usr/bin/zsh
 export PAGER=less
 export LESS="-R -F -X"
 export BAT_THEME=gruvbox-dark
