@@ -1,0 +1,70 @@
+# ~/.zshrc — minimal, working, gruvbox.
+
+# ---------- history ----------
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt hist_ignore_all_dups hist_ignore_space share_history inc_append_history extended_history
+
+# ---------- basics ----------
+setopt autocd interactive_comments extended_glob nomatch
+unsetopt beep
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+
+# ---------- completion ----------
+zmodload zsh/complist 2>/dev/null
+autoload -Uz compinit
+mkdir -p "$XDG_CACHE_HOME/zsh"
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+zstyle ':completion:*' keep-prefix
+
+# zsh-autosuggestions
+[[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#928374'
+
+# ---------- fzf ----------
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :200 {}'"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+export FZF_ALT_C_OPTS="--preview 'eza --tree --level=1 --icons {}'"
+export FZF_DEFAULT_OPTS="--height=45% --layout=reverse --border --info=inline \
+--color=bg+:#3c3836,bg:#282828,spinner:#fb4934,hl:#928374,fg:#ebdbb2,header:#928374,\
+info:#8ec07c,pointer:#fb4934,marker:#fabd2f,fg+:#ebdbb2,prompt:#8ec07c,hl+:#fabd2f,border:#3c3836"
+[[ -r /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
+[[ -r /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
+
+# ---------- prompt & navigation ----------
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+
+# ---------- aliases ----------
+alias vim='nvim'
+alias vi='nvim'
+alias cat='bat'
+alias df='df -h'
+alias du='du -h'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --all --long --header --group --git --icons --time-style=long-iso'
+  alias l='eza --all --long --header --group --git --icons --time-style=long-iso'
+  alias la='eza --all --long --header --group --git --icons --time-style=long-iso'
+  alias lt='eza --tree --level=2 --icons'
+  alias lta='eza --tree --level=2 --all --icons'
+fi
+
+# ---------- syntax highlighting (must be last) ----------
+[[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

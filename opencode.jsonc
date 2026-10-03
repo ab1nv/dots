@@ -1,0 +1,58 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // Shell used by the terminal and the shell tool.
+  "shell": "/bin/zsh",
+
+  // Format files after write/edit/patch when a formatter is available.
+  // Built-ins: ruff (.py), gofmt (.go), shfmt (.sh), prettier/biome (JS/TS with project deps).
+  "formatter": true,
+
+  // Check for updates and notify before installing.
+  "update": "notify",
+
+  // Keep context under control automatically.
+  "compaction": {
+    "auto": true,
+    "keep": {
+      "tokens": 15000
+    }
+  },
+
+  // OpenCode V2 plugins. Kept outside .opencode/plugins/ so they load exactly
+  // once (global config + project discovery would otherwise double-load them).
+  "plugins": [
+    "/home/abhinav/projects/dots/.opencode/context-mode",
+    "/home/abhinav/projects/dots/.opencode/langfuse"
+  ],
+
+  "mcp": {
+    "servers": {
+      // context-mode: sandbox execution + FTS5 knowledge base + session memory.
+      // codemode:false keeps context-mode_ctx_* tools directly callable.
+      "context-mode": {
+        "type": "local",
+        "command": ["context-mode"],
+        "environment": {
+          "CONTEXT_MODE_PLATFORM": "opencode"
+        },
+        "codemode": false,
+        "timeout": {
+          "startup": 45000
+        }
+      },
+
+      // OpenWiki: repo wiki retrieval + resumable generation lifecycle.
+      // NOTE: `openwiki integrations install` writes a V1-style `mcp.openwiki`
+      // entry; keep this V2 `mcp.servers.openwiki` shape when it does.
+      "openwiki": {
+        "type": "local",
+        "command": ["openwiki", "mcp", "--host", "opencode"]
+      }
+    }
+  },
+
+  "permissions": [
+    { "action": "context-mode_*", "resource": "*", "effect": "allow" }
+  ]
+}

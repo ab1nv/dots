@@ -1,7 +1,3 @@
-# Dots
-
-Personal dotfiles repo. zsh, tmux, opencode config, more to come.
-
 ## Communication: Caveman Mode
 YOU SPEAK IN CAVEMAN MODE:
 - No preamble. No "Here is the...", "Let me explain...", "I'll help you with..."

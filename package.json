@@ -1,0 +1,8 @@
+{
+  "name": "dots",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "context-mode": "1.0.169"
+  }
+}

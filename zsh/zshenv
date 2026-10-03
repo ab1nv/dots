@@ -1,0 +1,26 @@
+# ~/.zshenv — read by every zsh. Keep it small and side-effect free.
+
+export EDITOR=nvim
+export VISUAL=nvim
+export PAGER=less
+export LESS="-R -F -X"
+export BAT_THEME=gruvbox-dark
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# PATH
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$PNPM_HOME/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.grok/bin:$PATH"
+
+# XDG
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+# Observability (Langfuse) — fill keys to enable the OpenCode tracing plugin.
+# export LANGFUSE_PUBLIC_KEY="pk-lf-..."
+# export LANGFUSE_SECRET_KEY="sk-lf-..."
+# export LANGFUSE_HOST="https://cloud.langfuse.com"
+# export LANGFUSE_ENABLED="true"
+# export LANGFUSE_USER_ID="abhinav"
+# export LANGFUSE_ENVIRONMENT="development"
