@@ -58,3 +58,17 @@ dots/
 
 Skill: `.opencode/skills/learn/SKILL.md`.
 Command: `.opencode/commands/learn.md`.
+
+## The `/exam` skill
+
+`/exam`, `/exam <folder>`, or `/exam <topic>` builds an exam and grades it.
+
+- Reads a `/learn` folder (index plus unit files) when one is present, or works
+  from the topic alone.
+- Asks the type: 5-10 MCQs, 10-30 MCQs, or Mixed (MCQs, subjective, coding, and
+  topic-appropriate extras).
+- Writes `exam.md` with the paper and a collapsed answer key, then grades the
+  submitted answers with a per-unit breakdown.
+
+Skill: `.opencode/skills/exam/SKILL.md`.
+Command: `.opencode/commands/exam.md`.
