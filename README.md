@@ -47,13 +47,14 @@ dots/
 
 `/learn <concept>` or `/learn @INDEX.md` starts an adaptive one-to-one session.
 
-- Asks the learner's level, then tests (one question at a time) to find the edge
-  of what they already know.
-- Plans a dependency map (unconditional truths → goal) and teaches node by node.
+- Asks the learner's level, then probes with ~8–10 adaptive questions to find
+  the edge of what they already know.
+- Builds an indexed set of unit files (`00. Index.md` + `01. <Unit>.md`, …) and
+  teaches them one at a time.
 - Verifies facts with a `researcher` subagent and draws SVGs with a
   `diagram-maker` subagent.
-- Writes everything to a topic folder as Markdown for Obsidian: `test.md`,
-  `lesson.md`, `progress.md`, and `assets/*.svg`.
+- The index table is the only progress tracker (level + done per unit).
+  `test.md` is temporary and deleted when probing ends.
 
 Skill: `.opencode/skills/learn/SKILL.md`.
 Command: `.opencode/commands/learn.md`.

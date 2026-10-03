@@ -6,16 +6,15 @@ Everything is viewed in **Obsidian**. Write clean Markdown, not terminal output.
 
 - **Language.** Correct English by default. If metadata sets `language`, write in
   that language. Keep sentences short and clear.
-- **Hard words.** If a genuinely hard word must be used, gloss it in parentheses
-  right after, or in a footnote. Example: "flux (the amount flowing through a
-  surface per unit time)".
-- **Headings.** Use `#` for the document title, `##` for sections, `###` for
+- **Hard words.** Gloss a genuinely hard word in parentheses right after, or in a
+  footnote. Example: "flux (the amount flowing through a surface per unit time)".
+- **Headings.** `#` for the document title, `##` for sections, `###` for
   sub-sections. One `#` per file. Blank line before and after every heading.
 - **Breaks.** Blank line between paragraphs, around lists, around code, and
   around callouts. Never let two blocks touch.
-- **Emphasis.** `**bold**` for key terms on first use; `*italics*` for gentle
-  emphasis or a term being defined. Do not over-bold.
-- **Math (LaTeX).** Inline: `$f(x)$`. Display, fenced on its own lines:
+- **Emphasis.** `**bold**` for key terms on first use; `*italics*` for a term
+  being defined. Do not over-bold.
+- **Math (LaTeX).** Inline `$f(x)$`; display fenced on its own lines:
 
   ```md
   $$
@@ -23,101 +22,68 @@ Everything is viewed in **Obsidian**. Write clean Markdown, not terminal output.
   $$
   ```
 
-  If LaTeX can be used, it should be. Write `$f(x) = x^2$`, not `f(x) = x^2`.
 - **Diagrams.** SVG files live in `assets/` and are embedded by filename:
-  `![[assets/<name>.svg|520]]` (width 520 is a good default; use larger for dense
-  diagrams). Introduce the picture in one sentence, then let it carry the idea —
-  do not narrate every element back in prose.
-- **Dependency maps.** Use a `mermaid` fenced block; Obsidian renders it natively:
+  `![[assets/<name>.svg|520]]`.
+- **Callouts.** `> [!abstract]`, `> [!info]`, `> [!question]`, `> [!success]`,
+  `> [!failure]`, `> [!warning]`.
 
-  ````md
-  ```mermaid
-  graph TD
-    A[unconditional truth] --> B[derived step]
-    B --> C[goal]
-  ```
-  ````
+## Files that exist
 
-- **Callouts.** Use Obsidian callouts for questions and results:
-  `> [!question]`, `> [!success]`, `> [!failure]`, `> [!abstract]`, `> [!info]`,
-  `> [!warning]`.
+Only two kinds:
 
-## `<topic>/README.md`
+```
+<topic>/
+├── 00. Index.md
+├── 01. <Unit>.md
+├── 02. <Unit>.md
+└── assets/            # only if a diagram is needed
+```
+
+Never create a README, a progress file, or a lesson file. `test.md` is
+temporary during Phase 1 and is deleted when probing ends.
+
+## `<topic>/00. Index.md`
+
+The topic header, a `___` separator line, an `## Index` heading, then one table.
+The table is the index **and** the progress tracker.
 
 ```md
 # <Topic>
 
-> [!info] Session
-> **Goal:** <goal>
-> **Level:** <chosen level>
-> **Teaching style:** <socratic / expository / adaptive>
-> **Language:** <language>
+___
 
-## Files
+## Index
 
-- [[test]] — the adaptive test (questions and results)
-- [[lesson]] — the plan and the teaching
-- [[progress]] — the understanding map
+| # | Topic | Level | Done |
+| --- | --- | --- | --- |
+| 00 | [00. Index](00.%20Index.md) | — | ✅ |
+| 01 | [01. Database Transactions](01.%20Database%20Transactions.md) | intermediate | — |
+| 02 | [02. Indexes](02.%20Indexes.md) | beginner | — |
 ```
 
-## `<topic>/test.md`
+- `#` is zero-padded and matches the filename.
+- **Topic** is a Markdown link to the unit file. Spaces are `%20`; keep the
+  relative path so Obsidian resolves it. (Absolute paths are acceptable when the
+  learner asks for them.)
+- **Level** comes from the probe: `beginner`, `basics`, `comfortable`, or
+  `advanced` (use `—` when not tested).
+- **Done** is the last column: `—` while pending, `✅` when the learner says the
+  unit is done.
+- Row `00` is the index itself and is always `✅`.
+- Update the table in place as levels are found and units are finished. This is
+  the only place progress is stored.
 
-One question block per question, followed by its result block once answered.
-Question blocks never contain the answer or the correct option.
+## `<topic>/NN. <Unit>.md`
 
-```md
-# <Topic> — Understanding test
-
-> [!abstract] How this works
-> One question at a time. The question is written here; the answer options are
-> shown in the terminal. This file records the question and, once you answer, the
-> result.
-
----
-
-## Question 1
-
-> [!question] <Strand> · difficulty <n>/5
-> <The question, clearly written. Use LaTeX and line breaks.>
-
-<Optional short setup prose.>
-
-![[assets/q1-<slug>.svg|520]]
-
-> [!success] Result — correct ✓
-> **Your answer:** 2. <option text>
-> **Correct answer:** 2. <option text>
-> **Why:** <one or two sentences>.
-
----
-```
-
-For a miss use `> [!failure] Result — incorrect ✗`; for no attempt use
-`> [!warning] Result — I don't know`. Always include the correct answer and the
-"Why" line. Difficulty is your own 1–5 estimate of the question.
-
-## `<topic>/lesson.md`
-
-The plan first, then the teaching appended node by node.
+The unit title, then the teaching, node by node.
 
 ```md
-# <Topic> — Lesson
+# <Unit>
 
 > [!abstract] Goal
-> <what the learner is reaching for>
+> <one or two sentences: what this unit gets the learner>
 
-## Plan
-
-<A few freeform sentences: what we will cover, in what order, and why this way,
-given where the learner's edge sits and what they are reaching for.>
-
-```mermaid
-graph TD
-  A[<unconditional truth>] --> B[<derived step>]
-  B --> C[<goal>]
-```
-
-## Node 1 — <name>
+## <Node 1 name>
 
 **Motivation.** <why we need this node now>
 
@@ -127,29 +93,32 @@ graph TD
 
 ![[assets/<name>.svg|520]]   <!-- only if a picture earns its place -->
 
+## <Node 2 name>
+
+...
 ```
 
-Repeat the node loop for every node. A picture earns its place only when it shows
-something words cannot — shape, structure, direction, geometric relationship. If
-prose or one equation already carries it, do not add a diagram.
+A picture earns its place only when it shows something words cannot — shape,
+structure, direction, geometric relationship. If prose or one equation already
+carries it, do not add a diagram.
 
-## `<topic>/progress.md`
+## Temporary `<topic>/test.md` (Phase 1 only)
+
+One question block, then its result block once answered. Delete the file when
+probing ends. Never create it when the level is "Nothing yet".
 
 ```md
-# <Topic> — Understanding map
+## Question 1
 
-> [!info] Summary
-> <one or two sentences at the end of probing: where the edge is, what to teach>
+> [!question] <Unit> · difficulty <n>/5
+> <the question, clearly written>
 
-## Strands
-
-| Strand | Floor (knows) | Ceiling (doesn't) | Edge | Misconceptions |
-| --- | --- | --- | --- | --- |
-| <strand> | <what they got right> | <what they missed> | <pinned edge> | <wrong models found> |
-
-## Answer log
-
-1. `<strand>` — difficulty <n>/5 — **correct** — <note>
-2. `<strand>` — difficulty <n>/5 — **incorrect** — picked "<distractor>" — <what it reveals>
-3. `<strand>` — **I don't know** — <note>
+> [!success] Result — correct ✓
+> **Your answer:** 2. <option>
+> **Correct answer:** 2. <option>
+> **Why:** <one or two sentences>.
 ```
+
+Use `> [!failure]` for a miss and `> [!warning]` for "I don't know". Always
+include the correct answer and the "Why" line. The question block never contains
+the answer.
