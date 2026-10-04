@@ -23,7 +23,10 @@
   // once (global config + project discovery would otherwise double-load them).
   "plugins": [
     "/home/abhinav/projects/dots/.opencode/context-mode",
-    "/home/abhinav/projects/dots/.opencode/langfuse"
+    "/home/abhinav/projects/dots/.opencode/langfuse",
+    "/home/abhinav/projects/dots/.opencode/vibeguard",
+    "opencode-gemini-auth@latest",
+    "@mohak34/opencode-notifier@latest"
   ],
 
   "mcp": {

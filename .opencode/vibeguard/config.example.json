@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "debug": false,
+  "keywords": [
+    { "value": "put-your-exact-secret-here", "category": "API_KEY" }
+  ],
+  "regex": [
+    { "pattern": "sk-[A-Za-z0-9]{48}", "category": "OPENAI_KEY" },
+    { "pattern": "(ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]+", "category": "GITHUB_TOKEN" },
+    { "pattern": "AKIA[0-9A-Z]{16}", "category": "AWS_ACCESS_KEY" }
+  ],
+  "builtin": ["env_secret", "aws", "github", "openai", "anthropic", "slack", "google", "bearer", "private_key"],
+  "exclude": ["example.com", "localhost", "127.0.0.1", "0.0.0.0"]
+}
