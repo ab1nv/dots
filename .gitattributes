@@ -1,0 +1,7 @@
+# Exclude generated and vendored files from GitHub language statistics.
+
+# Generated HTML (the logo library gallery, preview sheets).
+*.html linguist-generated
+
+# Vendored logo library: 1,400+ third-party SVGs and its gallery.
+.opencode/skills/logo-design/assets/** linguist-vendored linguist-generated
