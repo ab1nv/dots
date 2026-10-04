@@ -72,3 +72,26 @@ Command: `.opencode/commands/learn.md`.
 
 Skill: `.opencode/skills/exam/SKILL.md`.
 Command: `.opencode/commands/exam.md`.
+
+## Modes
+
+| Mode | Use |
+| --- | --- |
+| `build` | Default coding agent. |
+| `plan` | Explore and plan without editing. |
+| `vibelearn` | Learn-by-building. You own the design and write the code; the agent forms the architecture with you, scaffolds incomplete code with docs pointers, reviews your code, and teaches trade-offs. |
+| `leetcode` | Leetcode/Codeforces workflow for the helvet repo. Scaffolds problems, nudges you to solve, audits code, records complexity, commits. |
+
+## Plugins
+
+- `context-mode` (local): hook port for routing and session continuity, plus the MCP server.
+- `langfuse` (local): zero-dep OTLP tracing.
+- `vibeguard` (local): redacts secrets before they reach the model, restores them before tools run. Always on.
+- `opencode-gemini-auth`: Google Gemini CLI OAuth (Antigravity).
+- `@mohak34/opencode-notifier`: desktop and sound notifications.
+
+## Commands
+
+- `/learn <concept|@file>`
+- `/exam [folder|topic]`
+- `/commit [push]`
