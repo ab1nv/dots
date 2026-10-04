@@ -135,6 +135,22 @@ YAML/Markdown when the project provides them), `rustfmt`, `clang-format`.
 - Hand-format Markdown and JSONC configs cleanly regardless: headings, blank
   lines, aligned arrays.
 
+## shadcn projects
+
+When a project uses shadcn (a `components.json` is present), set up
+`@shadcn/lint` before styling work:
+
+1. Read https://github.com/shadcn-ui/lint/blob/main/SETUP.md in full.
+2. Detect the package manager and the existing linter (ESLint flat config or
+   Oxlint). Prefer the linter that already checks the UI files.
+3. Install `@shadcn/lint` plus the parser the framework needs.
+4. Register the plugin (`plugins` for ESLint, `jsPlugins` for Oxlint) in the
+   existing config. Preserve existing rules and ignores. Do not enable new rules
+   during setup.
+5. Add the lint command as the `lint` script in `package.json`.
+6. Run it and separate config errors from existing findings.
+7. After changes, run `npm run lint` and fix all errors.
+
 ## Git commits
 
 Unless told otherwise, every commit message uses Conventional Commits:
