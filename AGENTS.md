@@ -186,43 +186,38 @@ Native tools stay correct for: `read` when you need the exact bytes to `edit`;
 `shell` for short observe/mutate commands (`git status`, `mkdir`, `mv`); native
 `write`/`edit` for all file writes (sandboxes do not persist edits).
 
-## Repo wiki (openwiki)
-
-When a repository has an `openwiki/` directory, or when asked to document a
-repo, use `openwiki_search` / `openwiki_read` before deep source reading, and
-the `openwiki_begin` → `openwiki_submit_plan` → `openwiki_next_page` →
-`openwiki_submit_page` → `openwiki_finish` lifecycle to initialize or update
-it. The `openwiki` skill holds the full workflow. A clean `--update` is a no-op;
-run updates when the repo changed.
-
 ## Web research
 
-Use the `web-access` MCP. Do not use native `webfetch` (context-mode redirects
-it) and never trust a snippet without fetching the page.
+Search with the `exa` MCP first.
 
-- `web-access_web_search` — start here. Pass `queries[]` to ask several related
-  questions in one call.
-- `web-access_web_fetch` — read a page. Use `focus=` to return only the relevant
-  part; check `content_ok` and `next_action`; paginate with `next_offset` or
-  `web-access_web_content`.
-- `web-access_web_crawl` — map or crawl a site when one page is not enough
-  (`discover_only`, `sitemap`).
-- `web-access_web_content` — page or `find_text` any previous response by
-  `response_id` instead of re-fetching.
-- `web-access_source_check` — verify a factual claim; read the returned passages
-  (offsets + SHA-256 hashes) and cite them. The status is a pointer, not proof.
-- `web-access_web_admin` — version, cache stats/clear, doctor.
+- `exa_web_search_exa` — quick search. Give a natural-language query and an
+  `objective` (what should rank first, what to pull out).
+- `exa_web_search_advanced_exa` — filters: domain, date, category, highlights,
+  subpages.
+- `exa_web_fetch_exa` — read pages as clean markdown.
 
-Stealth, JS rendering, and CAPTCHA are handled by the engine (Patchright with
-system Chrome; Cloudflare Turnstile solved). If a page returns `content_ok=false`
-or a `page_type` like `bot_wall`, switch source or say so plainly. Never invent
-content for a page that could not be read.
+Exa runs on a free plan. If a call returns 429, times out, or comes back empty,
+fall back to the `web-access` MCP. Do not retry Exa in a loop.
+
+Use `web-access` for the jobs Exa does not cover:
+
+- `web-access_web_search` / `web-access_web_fetch` — fallback search and fetch,
+  plus stealth fetches of bot-protected pages.
+- `web-access_web_crawl` — crawl or sitemap a site.
+- `web-access_web_content` — page or `find_text` a previous response.
+- `web-access_source_check` — verify a claim; read the returned passages
+  (offsets + SHA-256) and cite them.
+
+Never use native `webfetch` (context-mode redirects it) and never trust a
+snippet without fetching the page. Stealth, JS rendering, and CAPTCHA are
+handled by the web-access engine. If a page returns `content_ok=false` or a
+`page_type` like `bot_wall`, switch source or say so plainly.
 
 ## Subagents
 
 - `explore` — fast codebase search and reading.
 - `general` — multi-step research or execution.
-- `researcher` — verified web facts with citations (uses `web-access`).
+- `researcher` — verified web facts with citations (Exa first, web-access fallback).
 - `diagram-maker` — correct, minimal SVG diagrams.
 
 Use a subagent when its specialty matches; keep the main context clean.

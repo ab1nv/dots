@@ -86,9 +86,14 @@ Command: `.opencode/commands/exam.md`.
 
 - `context-mode` (local): hook port for routing and session continuity, plus the MCP server.
 - `langfuse` (local): zero-dep OTLP tracing.
-- `vibeguard` (local): redacts secrets before they reach the model, restores them before tools run. Always on.
 - `opencode-gemini-auth`: Google Gemini CLI OAuth (Antigravity).
 - `@mohak34/opencode-notifier`: desktop and sound notifications.
+
+## MCP servers
+
+- `context-mode`: sandbox execution, FTS5 knowledge base, session memory.
+- `exa`: hosted web search and fetch. Free plan, falls back to web-access.
+- `web-access`: merged web MCP (Hound engine plus retrieval and source_check).
 
 ## Commands
 

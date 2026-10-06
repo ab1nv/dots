@@ -24,7 +24,6 @@
   "plugins": [
     "/home/abhinav/projects/dots/.opencode/context-mode",
     "/home/abhinav/projects/dots/.opencode/langfuse",
-    "/home/abhinav/projects/dots/.opencode/vibeguard",
     "opencode-gemini-auth@latest",
     "@mohak34/opencode-notifier@latest"
   ],
@@ -45,12 +44,14 @@
         }
       },
 
-      // OpenWiki: repo wiki retrieval + resumable generation lifecycle.
-      // NOTE: `openwiki integrations install` writes a V1-style `mcp.openwiki`
-      // entry; keep this V2 `mcp.servers.openwiki` shape when it does.
-      "openwiki": {
-        "type": "local",
-        "command": ["openwiki", "mcp", "--host", "opencode"]
+      // Exa: hosted web search and fetch MCP. Free plan; the agent falls back to
+      // web-access when the free quota is exhausted. Key comes from EXA_API_KEY.
+      "exa": {
+        "type": "remote",
+        "url": "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa,web_search_advanced_exa",
+        "headers": {
+          "x-api-key": "{env:EXA_API_KEY}"
+        }
       },
 
       // web-access: merged web MCP (Hound engine + retrieval/source_check layer).
@@ -67,6 +68,7 @@
   },
 
   "permissions": [
-    { "action": "context-mode_*", "resource": "*", "effect": "allow" }
+    { "action": "context-mode_*", "resource": "*", "effect": "allow" },
+    { "action": "exa_*", "resource": "*", "effect": "allow" }
   ]
 }
