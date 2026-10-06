@@ -21,28 +21,51 @@
  * Disabled (no keys) means setup returns immediately and subscribes to nothing.
  */
 
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { homedir } from "node:os";
+
 const str = (v: string | undefined) => (v && v.trim() ? v.trim() : undefined);
+const bool = (v: unknown, dflt: boolean) => (v === undefined ? dflt : String(v).toLowerCase() !== "false");
+
+/** Optional config file, used when the env vars are not present in the server. */
+function fileCfg(): Record<string, unknown> {
+  try {
+    const dir = process.env.XDG_CONFIG_HOME ?? join(homedir(), ".config");
+    const path = join(dir, "opencode", "langfuse.json");
+    if (existsSync(path)) return JSON.parse(readFileSync(path, "utf-8")) as Record<string, unknown>;
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
 
 const cfg = (() => {
-  const enabled = (process.env.LANGFUSE_ENABLED ?? "true").toLowerCase() !== "false";
-  const publicKey = str(process.env.LANGFUSE_PUBLIC_KEY);
-  const secretKey = str(process.env.LANGFUSE_SECRET_KEY);
+  const file = fileCfg();
+  const enabled = bool(process.env.LANGFUSE_ENABLED ?? file.enabled, true);
+  const publicKey = str(process.env.LANGFUSE_PUBLIC_KEY) ?? str(file.publicKey as string);
+  const secretKey = str(process.env.LANGFUSE_SECRET_KEY) ?? str(file.secretKey as string);
   if (!enabled || !publicKey || !secretKey) return undefined;
   const host = (
     str(process.env.LANGFUSE_HOST) ??
     str(process.env.LANGFUSE_BASE_URL) ??
+    str(file.host as string) ??
+    str(file.baseUrl as string) ??
     "https://cloud.langfuse.com"
   ).replace(/\/+$/, "");
   return {
     url: `${host}/api/public/otel/v1/traces`,
     auth: "Basic " + btoa(`${publicKey}:${secretKey}`),
-    userId: str(process.env.LANGFUSE_USER_ID),
-    environment: str(process.env.LANGFUSE_ENVIRONMENT) ?? str(process.env.LANGFUSE_TRACING_ENVIRONMENT),
-    release: str(process.env.LANGFUSE_RELEASE) ?? "opencode-langfuse@0.1.0",
-    captureIO: (process.env.LANGFUSE_CAPTURE_IO ?? "true").toLowerCase() !== "false",
-    captureContext: (process.env.LANGFUSE_CAPTURE_CONTEXT ?? "true").toLowerCase() !== "false",
-    sampleRate: Math.min(1, Math.max(0, Number(process.env.LANGFUSE_SAMPLE_RATE ?? "1"))),
-    debug: (process.env.LANGFUSE_DEBUG ?? "").toLowerCase() === "true",
+    userId: str(process.env.LANGFUSE_USER_ID) ?? str(file.userId as string),
+    environment:
+      str(process.env.LANGFUSE_ENVIRONMENT) ??
+      str(process.env.LANGFUSE_TRACING_ENVIRONMENT) ??
+      str(file.environment as string),
+    release: str(process.env.LANGFUSE_RELEASE) ?? str(file.release as string) ?? "opencode-langfuse@0.1.0",
+    captureIO: bool(process.env.LANGFUSE_CAPTURE_IO ?? file.captureIO, true),
+    captureContext: bool(process.env.LANGFUSE_CAPTURE_CONTEXT ?? file.captureContext, true),
+    sampleRate: Math.min(1, Math.max(0, Number(process.env.LANGFUSE_SAMPLE_RATE ?? file.sampleRate ?? "1"))),
+    debug: bool(process.env.LANGFUSE_DEBUG ?? file.debug, false),
   };
 })();
 
