@@ -13,5 +13,10 @@
     "thinking": "hide"
   },
   "animations": true,
-  "plugins": ["*", "-opencode.notifications"]
+  "attention": {
+    "notifications": true,
+    "sound": true,
+    "volume": 0.4
+  },
+  "plugins": ["*"]
 }

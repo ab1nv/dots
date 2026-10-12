@@ -24,8 +24,7 @@
   "plugins": [
     "/home/abhinav/projects/dots/.opencode/context-mode",
     "/home/abhinav/projects/dots/.opencode/langfuse",
-    "opencode-gemini-auth@latest",
-    "@mohak34/opencode-notifier@latest"
+    "opencode-gemini-auth@latest"
   ],
 
   "mcp": {
