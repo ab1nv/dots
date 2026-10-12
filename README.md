@@ -1,104 +1,161 @@
-# Dots
+<p align="center">
+  <img src="assets/logo.svg" alt="dots" width="300">
+</p>
 
-Personal dotfiles, synced into place with symlinks. Run `./install.sh` on a new
-machine after cloning. Everything user-facing lives in this one repo: OpenCode
-(the `/learn` tutor), zsh + starship, Ghostty, tmux, and nvim.
+<p align="center">
+  <img alt="Arch Linux" src="https://img.shields.io/badge/Arch-Linux-1793d1?logo=archlinux&logoColor=white">
+  <img alt="zsh" src="https://img.shields.io/badge/shell-zsh-4e9a06">
+  <img alt="Ghostty" src="https://img.shields.io/badge/terminal-Ghostty-5c6a72">
+  <img alt="tmux" src="https://img.shields.io/badge/tmux-3.7-1bb91f?logo=tmux&logoColor=white">
+  <img alt="Neovim" src="https://img.shields.io/badge/editor-Neovim-57a143?logo=neovim&logoColor=white">
+  <img alt="OpenCode" src="https://img.shields.io/badge/OpenCode-v2-111111">
+</p>
+
+<p align="center">Personal dotfiles for Arch Linux. Clone, run <code>install.sh</code>, done.</p>
+
+## Install
+
+```sh
+git clone https://github.com/ab1nv/dots.git ~/projects/dots
+~/projects/dots/install.sh
+chsh -s /usr/bin/zsh
+```
+
+`install.sh` is idempotent. It only creates symlinks and never edits files in
+place.
 
 ## Layout
 
 ```
 dots/
-├── install.sh                # create all symlinks
-├── AGENTS.md                 # global OpenCode instructions
-├── opencode.jsonc            # global OpenCode config
-├── cli.json                  # OpenCode TUI config (gruvbox theme)
+├── install.sh              symlink everything
+├── AGENTS.md               global OpenCode instructions
+├── opencode.jsonc          global OpenCode config (plugins, MCP, formatter)
+├── cli.json                OpenCode terminal settings (theme, attention)
 ├── .opencode/
-│   ├── agents/               # subagents  (researcher, diagram-maker)
-│   ├── commands/             # slash commands (learn)
-│   ├── skills/               # skills (learn)
-│   ├── plugins/              # plugins
-│   └── mcp/                  # local MCP servers
-├── ghostty/config            # Ghostty terminal
-├── tmux/tmux.conf            # tmux
-├── starship/starship.toml    # starship prompt
-├── zsh/zshrc, zsh/zshenv     # zsh
-├── vscode/settings.json      # VS Code
-└── nvim/                     # neovim (config added later)
+│   ├── agents/             vibelearn, leetcode, researcher, diagram-maker
+│   ├── commands/           /learn, /exam, /commit
+│   ├── skills/             learn, exam, commit, logo-design, anatomy
+│   ├── context-mode/       OpenCode V2 port of the context-mode plugin
+│   ├── langfuse/           OTLP tracing plugin
+│   └── mcp/web-access/     merged web MCP (Python)
+├── ghostty/config          terminal
+├── tmux/tmux.conf          multiplexer
+├── starship/starship.toml  prompt
+├── zsh/{zshrc,zshenv}      shell
+├── vscode/settings.json    VS Code
+├── nvim/                   Neovim config (empty, set up later)
+└── assets/logo.svg         repo logo
 ```
 
-## Symlink map
+## Files
 
-| System path | Points at |
+| Path | What it does | Symlinks to |
+| --- | --- | --- |
+| `AGENTS.md` | Global OpenCode instructions: Caveman, Ponytail, writing, formatting, file search, context-mode, web research, shadcn, commits, subagents. | `~/.config/opencode/AGENTS.md` |
+| `opencode.jsonc` | OpenCode server config: shell, formatter, compaction, plugins, MCP servers, permissions. | `~/.config/opencode/opencode.jsonc` |
+| `cli.json` | OpenCode TUI config: gruvbox theme, diffs, sidebar, native notifications and sounds. | `~/.config/opencode/cli.json` |
+| `zsh/zshrc` | Interactive zsh: history, completion, autosuggestions, syntax highlight, fzf, starship, zoxide, eza aliases. | `~/.zshrc` |
+| `zsh/zshenv` | Env for every zsh: editor, pager, bat theme, PATH, XDG, secrets. | `~/.zshenv` |
+| `starship/starship.toml` | Minimal gruvbox prompt. | `~/.config/starship.toml` |
+| `ghostty/config` | Ghostty: Gruvbox Dark Hard, JetBrains Mono, maximized, borderless, zsh. | `~/.config/ghostty` |
+| `tmux/tmux.conf` | tmux: prefix `C-a`, mouse, vi copy mode, gruvbox status bar. | `~/.tmux.conf` |
+| `vscode/settings.json` | VS Code: JetBrains Mono, size 16, ligatures, smooth scrolling. | `~/.config/Code/User/settings.json` |
+| `nvim/` | Empty Neovim config, filled in later. | `~/.config/nvim` |
+| `.opencode/agents/` | Custom agents and modes. | `~/.config/opencode/agents` |
+| `.opencode/commands/` | Slash commands. | `~/.config/opencode/commands` |
+| `.opencode/skills/` | Skills. | `~/.config/opencode/skills` |
+| `.opencode/plugins/` | Project-local plugin drop folder. | `~/.config/opencode/plugins` |
+
+## OpenCode
+
+Server config is `opencode.jsonc`, terminal settings are `cli.json`, and
+instructions are `AGENTS.md`. Instructions only work through `AGENTS.md`; the
+`instructions` config key is ignored in V2.
+
+### Plugins
+
+- `context-mode` (local): routes large tool output to a sandbox and keeps session memory. Also runs an MCP server.
+- `langfuse` (local): sends one OTLP trace per turn to Langfuse, with generations, tool spans, tokens, and cost.
+- `opencode-gemini-auth`: Google Gemini CLI OAuth.
+
+### MCP servers
+
+- `context-mode`: sandbox execution, FTS5 knowledge base, session memory. Tools appear as `context-mode_ctx_*`.
+- `exa` (remote): advanced Exa search, only `exa_web_search_advanced_exa`. Free plan, key from `EXA_API_KEY`.
+- `web-access` (local, Python): Hound engine for search, stealth fetch, crawl, screenshots, PDFs, plus `source_check`.
+
+### Modes
+
+Switch with Tab.
+
+- `build`: default coding agent.
+- `plan`: read-only planning.
+- `vibelearn`: learn by building. You design and write the code; the agent scaffolds and reviews.
+- `leetcode`: helvet repo workflow. Scaffold, coach, complexity, commit.
+
+### Subagents
+
+- `researcher`: web facts with citations.
+- `diagram-maker`: correct, minimal SVG.
+
+### Commands
+
+- `/learn <concept|@file>`: adaptive tutor. Writes `00. Index.md` plus numbered unit files.
+- `/exam [folder|topic]`: exam builder and grader.
+- `/commit [push]`: conventional commit, optional push.
+
+### Skills
+
+- `learn`, `exam`, `commit`: as above.
+- `logo-design`: logo and brand mark design, with a 1,400 logo SVG library.
+- `anatomy`: isometric SVG figures that explain a concept as a real object, with WebGL and 3D.
+
+### Secrets
+
+Secrets stay outside the repo:
+
+- `~/.config/zsh/secrets.zsh` (mode 600), sourced by `zshenv`. Holds `EXA_API_KEY` and `LANGFUSE_*`.
+- `~/.config/opencode/langfuse.json` (mode 600): Langfuse keys when the server env is missing.
+- `~/.config/environment.d/50-langfuse.conf`: the same keys for systemd user services.
+
+## Shell
+
+zsh with starship, zoxide, eza, fzf, bat.
+
+| Command | Does |
 | --- | --- |
-| `~/.config/opencode/AGENTS.md` | `dots/AGENTS.md` |
-| `~/.config/opencode/opencode.jsonc` | `dots/opencode.jsonc` |
-| `~/.config/opencode/cli.json` | `dots/cli.json` |
-| `~/.config/opencode/agents` | `dots/.opencode/agents` |
-| `~/.config/opencode/commands` | `dots/.opencode/commands` |
-| `~/.config/opencode/skills` | `dots/.opencode/skills` |
-| `~/.config/opencode/plugins` | `dots/.opencode/plugins` |
-| `~/.config/ghostty` | `dots/ghostty` |
-| `~/.config/starship.toml` | `dots/starship/starship.toml` |
-| `~/.config/nvim` | `dots/nvim` |
-| `~/.config/Code/User/settings.json` | `dots/vscode/settings.json` |
-| `~/.tmux.conf` | `dots/tmux/tmux.conf` |
-| `~/.zshrc` | `dots/zsh/zshrc` |
-| `~/.zshenv` | `dots/zsh/zshenv` |
+| `z name`, `cd name` | zoxide jump. `cd` itself uses zoxide. `cdi` is interactive. |
+| `ls`, `l`, `la` | eza long, all, git status, icons. |
+| `lt`, `lta` | eza tree, level 2. |
+| `cat` | bat. |
+| `vim`, `vi` | nvim. |
+| `Ctrl+R`, `Ctrl+T`, `Alt+C` | fzf history, files, directories. |
 
-## The `/learn` tutor
+## Terminal
 
-`/learn <concept>` or `/learn @INDEX.md` starts an adaptive one-to-one session.
+Ghostty runs zsh, maximized, no borders, Gruvbox Dark Hard, JetBrains Mono.
+tmux prefix is `Ctrl+a`. Vertical split `|` or `:`, horizontal split `-` or `"`,
+command prompt `;`, reload `r`. Mouse is on.
 
-- Asks the learner's level, then probes with ~8–10 adaptive questions to find
-  the edge of what they already know.
-- Builds an indexed set of unit files (`00. Index.md` + `01. <Unit>.md`, …) and
-  teaches them one at a time.
-- Verifies facts with a `researcher` subagent and draws SVGs with a
-  `diagram-maker` subagent.
-- The index table is the only progress tracker (level + done per unit).
-  `test.md` is temporary and deleted when probing ends.
+## Editors
 
-Skill: `.opencode/skills/learn/SKILL.md`.
-Command: `.opencode/commands/learn.md`.
+Neovim is installed and aliased from `vim` and `vi`. Its config is empty for now.
+VS Code uses JetBrains Mono at size 16.
 
-## The `/exam` skill
+## Arch notes
 
-`/exam`, `/exam <folder>`, or `/exam <topic>` builds an exam and grades it.
+- pacman: `ghostty zsh starship eza fzf zoxide tmux neovim ttf-jetbrains-mono ttf-jetbrains-mono-nerd ruff zsh-autosuggestions zsh-syntax-highlighting zsh-completions nodejs npm bun yt-dlp ffmpeg tesseract`.
+- Outside pacman: `fff-mcp` (curl script), `context-mode` (npm global), `hound-mcp` and `web-access-mcp` (pipx and uv).
+- `google-chrome-stable` is used by Hound for the best TLS fingerprint.
+- Native notifications need `notify-send` and a sound player such as `paplay`.
+- Login shell is set with `chsh -s /usr/bin/zsh`.
+- tmux copy mode uses `wl-copy` on Wayland, with `xclip` as fallback.
 
-- Reads a `/learn` folder (index plus unit files) when one is present, or works
-  from the topic alone.
-- Asks the type: 5-10 MCQs, 10-30 MCQs, or Mixed (MCQs, subjective, coding, and
-  topic-appropriate extras).
-- Writes `exam.md` with the paper and a collapsed answer key, then grades the
-  submitted answers with a per-unit breakdown.
+## Fresh machine
 
-Skill: `.opencode/skills/exam/SKILL.md`.
-Command: `.opencode/commands/exam.md`.
-
-## Modes
-
-| Mode | Use |
-| --- | --- |
-| `build` | Default coding agent. |
-| `plan` | Explore and plan without editing. |
-| `vibelearn` | Learn-by-building. You own the design and write the code; the agent forms the architecture with you, scaffolds incomplete code with docs pointers, reviews your code, and teaches trade-offs. |
-| `leetcode` | Leetcode/Codeforces workflow for the helvet repo. Scaffolds problems, nudges you to solve, audits code, records complexity, commits. |
-
-## Plugins
-
-- `context-mode` (local): hook port for routing and session continuity, plus the MCP server.
-- `langfuse` (local): zero-dep OTLP tracing.
-- `opencode-gemini-auth`: Google Gemini CLI OAuth (Antigravity).
-- `@mohak34/opencode-notifier`: desktop and sound notifications.
-
-## MCP servers
-
-- `context-mode`: sandbox execution, FTS5 knowledge base, session memory.
-- `exa`: hosted web search and fetch. Free plan, falls back to web-access.
-- `web-access`: merged web MCP (Hound engine plus retrieval and source_check).
-
-## Commands
-
-- `/learn <concept|@file>`
-- `/exam [folder|topic]`
-- `/commit [push]`
+1. Install the packages above.
+2. `git clone https://github.com/ab1nv/dots.git ~/projects/dots && ~/projects/dots/install.sh`.
+3. `chsh -s /usr/bin/zsh`, then reopen the terminal.
+4. Create `~/.config/zsh/secrets.zsh` with your keys (mode 600).
+5. Start OpenCode once so it installs the npm plugins and connects the MCP servers.

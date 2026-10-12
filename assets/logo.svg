@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 210" role="img" aria-label="dots">
+  <text x="300" y="124" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="132" font-weight="700" letter-spacing="-5" fill="#ebdbb2">dots<tspan fill="#b8bb26">.</tspan></text>
+  <rect x="188" y="146" width="224" height="3" rx="1.5" fill="#3c3836"/>
+  <text x="300" y="186" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="24" letter-spacing="11" fill="#928374">dotfiles</text>
+</svg>
