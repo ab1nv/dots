@@ -21,7 +21,7 @@
  * Disabled (no keys) means setup returns immediately and subscribes to nothing.
  */
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
 
@@ -64,6 +64,7 @@ const cfg = (() => {
     release: str(process.env.LANGFUSE_RELEASE) ?? str(file.release as string) ?? "opencode-langfuse@0.1.0",
     captureIO: bool(process.env.LANGFUSE_CAPTURE_IO ?? file.captureIO, true),
     captureContext: bool(process.env.LANGFUSE_CAPTURE_CONTEXT ?? file.captureContext, true),
+    dumpSystem: bool(process.env.LANGFUSE_DUMP_SYSTEM ?? file.dumpSystem, false),
     sampleRate: Math.min(1, Math.max(0, Number(process.env.LANGFUSE_SAMPLE_RATE ?? file.sampleRate ?? "1"))),
     debug: bool(process.env.LANGFUSE_DEBUG ?? file.debug, false),
   };
@@ -349,6 +350,19 @@ export default {
             const system = (e.system ?? [])
               .map((p: any) => (typeof p === "string" ? p : typeof p?.text === "string" ? p.text : ""))
               .join("\n");
+            if (cfg!.dumpSystem) {
+              try {
+                const dir = join(process.env.XDG_CACHE_HOME ?? join(homedir(), ".cache"), "opencode-langfuse");
+                mkdirSync(dir, { recursive: true });
+                writeFileSync(
+                  join(dir, "last-system.txt"),
+                  `# session ${e.sessionID}\n# ${new Date().toISOString()}\n\n${system}\n`,
+                  "utf-8",
+                );
+              } catch {
+                /* ignore */
+              }
+            }
             const msgs = (e.messages ?? []).slice(-24).map((m: any) => ({
               role: m.role,
               text:

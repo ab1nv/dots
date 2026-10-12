@@ -47,7 +47,7 @@
       // web-access when the free quota is exhausted. Key comes from EXA_API_KEY.
       "exa": {
         "type": "remote",
-        "url": "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa,web_search_advanced_exa",
+        "url": "https://mcp.exa.ai/mcp?tools=web_search_advanced_exa",
         "headers": {
           "x-api-key": "{env:EXA_API_KEY}"
         }

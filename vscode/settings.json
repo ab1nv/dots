@@ -1,0 +1,15 @@
+{
+  "workbench.startupEditor": "none",
+  "update.showReleaseNotes": false,
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.colorTheme": "Dark Modern",
+  "editor.fontFamily": "JetBrains Mono, JetBrainsMono Nerd Font, monospace",
+  "editor.fontSize": 16,
+  "editor.fontLigatures": true,
+  "editor.smoothScrolling": true,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorBlinking": "phase",
+  "terminal.integrated.fontFamily": "JetBrains Mono, JetBrainsMono Nerd Font, monospace",
+  "workbench.list.smoothScrolling": true,
+  "terminal.integrated.smoothScrolling": true
+}

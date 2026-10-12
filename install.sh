@@ -25,6 +25,8 @@ link "$DOTS/tmux/tmux.conf" "$HOME/.tmux.conf"
 echo "Editor"
 mkdir -p "$DOTS/nvim"
 link "$DOTS/nvim" "$HOME/.config/nvim"
+mkdir -p "$HOME/.config/Code/User"
+link "$DOTS/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
 
 echo "OpenCode"
 link "$DOTS/AGENTS.md" "$HOME/.config/opencode/AGENTS.md"

@@ -188,18 +188,15 @@ Native tools stay correct for: `read` when you need the exact bytes to `edit`;
 
 ## Web research
 
-Search with the `exa` MCP first.
+Search with the native `websearch` tool. It uses the selected provider and falls
+back across providers when one is rate limited.
 
-- `exa_web_search_exa` — quick search. Give a natural-language query and an
-  `objective` (what should rank first, what to pull out).
-- `exa_web_search_advanced_exa` — filters: domain, date, category, highlights,
-  subpages.
-- `exa_web_fetch_exa` — read pages as clean markdown.
+Use `exa_web_search_advanced_exa` only when it clearly helps or the user asks for
+it: domain, date, or category filters, highlights, summaries, or subpage
+crawling. Do not reach for it by default. It runs on Exa's free plan; if it
+returns 429 or times out, fall back to `web-access`.
 
-Exa runs on a free plan. If a call returns 429, times out, or comes back empty,
-fall back to the `web-access` MCP. Do not retry Exa in a loop.
-
-Use `web-access` for the jobs Exa does not cover:
+Use `web-access` for the rest:
 
 - `web-access_web_search` / `web-access_web_fetch` — fallback search and fetch,
   plus stealth fetches of bot-protected pages.

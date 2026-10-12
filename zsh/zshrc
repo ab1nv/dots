@@ -46,7 +46,7 @@ info:#8ec07c,pointer:#fb4934,marker:#fabd2f,fg+:#ebdbb2,prompt:#8ec07c,hl+:#fabd
 
 # ---------- prompt & navigation ----------
 eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
 
 # ---------- aliases ----------
 alias vim='nvim'
