@@ -5,3 +5,6 @@
 
 # Vendored logo library: 1,400+ third-party SVGs and its gallery.
 .opencode/skills/logo-design/assets/** linguist-vendored linguist-generated
+
+# Anatomy example pages (built HTML, vendored skill).
+.opencode/skills/anatomy/examples/** linguist-generated linguist-vendored
