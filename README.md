@@ -22,6 +22,7 @@ dots/
 ├── tmux/tmux.conf            # tmux
 ├── starship/starship.toml    # starship prompt
 ├── zsh/zshrc, zsh/zshenv     # zsh
+├── vscode/settings.json      # VS Code
 └── nvim/                     # neovim (config added later)
 ```
 
@@ -39,6 +40,7 @@ dots/
 | `~/.config/ghostty` | `dots/ghostty` |
 | `~/.config/starship.toml` | `dots/starship/starship.toml` |
 | `~/.config/nvim` | `dots/nvim` |
+| `~/.config/Code/User/settings.json` | `dots/vscode/settings.json` |
 | `~/.tmux.conf` | `dots/tmux/tmux.conf` |
 | `~/.zshrc` | `dots/zsh/zshrc` |
 | `~/.zshenv` | `dots/zsh/zshenv` |
