@@ -28,6 +28,10 @@ link "$DOTS/nvim" "$HOME/.config/nvim"
 mkdir -p "$HOME/.config/Code/User"
 link "$DOTS/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
 
+echo "Rust"
+mkdir -p "$HOME/.cargo"
+link "$DOTS/cargo/config.toml" "$HOME/.cargo/config.toml"
+
 echo "OpenCode"
 link "$DOTS/AGENTS.md" "$HOME/.config/opencode/AGENTS.md"
 link "$DOTS/opencode.jsonc" "$HOME/.config/opencode/opencode.jsonc"

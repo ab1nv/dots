@@ -135,6 +135,14 @@ YAML/Markdown when the project provides them), `rustfmt`, `clang-format`.
 - Hand-format Markdown and JSONC configs cleanly regardless: headings, blank
   lines, aligned arrays.
 
+## Rust
+
+Always link Rust with mold. The cargo config at `~/.cargo/config.toml`
+(symlinked from `dots/cargo/config.toml`) sets clang and `-fuse-ld=mold` for
+`x86_64-unknown-linux-gnu`. Keep it in place. If a project has its own
+`.cargo/config.toml`, make sure it does not drop mold, or build with
+`RUSTFLAGS="-C link-arg=-fuse-ld=mold"`.
+
 ## shadcn projects
 
 When a project uses shadcn (a `components.json` is present), set up

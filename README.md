@@ -44,6 +44,7 @@ dots/
 ├── starship/starship.toml  prompt
 ├── zsh/{zshrc,zshenv}      shell
 ├── vscode/settings.json    VS Code
+├── cargo/config.toml       Rust linker (mold)
 ├── nvim/                   Neovim config (empty, set up later)
 └── assets/logo.svg         repo logo
 ```
@@ -61,6 +62,7 @@ dots/
 | `ghostty/config` | Ghostty: Gruvbox Dark Hard, JetBrains Mono, maximized, borderless, zsh. | `~/.config/ghostty` |
 | `tmux/tmux.conf` | tmux: prefix `C-a`, mouse, vi copy mode, gruvbox status bar. | `~/.tmux.conf` |
 | `vscode/settings.json` | VS Code: JetBrains Mono, size 16, ligatures, smooth scrolling. | `~/.config/Code/User/settings.json` |
+| `cargo/config.toml` | Rust linker: clang with mold for `x86_64-unknown-linux-gnu`. | `~/.cargo/config.toml` |
 | `nvim/` | Empty Neovim config, filled in later. | `~/.config/nvim` |
 | `.opencode/agents/` | Custom agents and modes. | `~/.config/opencode/agents` |
 | `.opencode/commands/` | Slash commands. | `~/.config/opencode/commands` |
@@ -145,7 +147,7 @@ VS Code uses JetBrains Mono at size 16.
 
 ## Arch notes
 
-- pacman: `ghostty zsh starship eza fzf zoxide tmux neovim ttf-jetbrains-mono ttf-jetbrains-mono-nerd ruff zsh-autosuggestions zsh-syntax-highlighting zsh-completions nodejs npm bun yt-dlp ffmpeg tesseract`.
+- pacman: `ghostty zsh starship eza fzf zoxide tmux neovim ttf-jetbrains-mono ttf-jetbrains-mono-nerd ruff zsh-autosuggestions zsh-syntax-highlighting zsh-completions nodejs npm bun yt-dlp ffmpeg tesseract mold clang`.
 - Outside pacman: `fff-mcp` (curl script), `context-mode` (npm global), `hound-mcp` and `web-access-mcp` (pipx and uv).
 - `google-chrome-stable` is used by Hound for the best TLS fingerprint.
 - Native notifications need `notify-send` and a sound player such as `paplay`.
